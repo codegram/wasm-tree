@@ -12,6 +12,16 @@
     2: "GROWING"
   };
 
+  const logMessages = [];
+
+  const addMessage = msg => {
+    logMessages.unshift(msg);
+    if (logMessages.length > 10) {
+      logMessages.pop();
+    }
+    logMessages = logMessages;
+  };
+
   const updateState = () => {
     // sad
     leaves = leaves;
@@ -32,7 +42,7 @@
         babies.splice(i, 1);
       }
       if (STATUS[grown] === "DIED") {
-        alert("the baby tree has died :(");
+        addMessage("the baby tree has died :(");
       }
     });
     updateState();
@@ -79,3 +89,9 @@
 <button on:click={handlePlantTree} disabled={fruits.count < 1}>
   Plant tree (1 fruit)
 </button>
+
+<ul>
+  {#each logMessages as message}
+    <li>{message}</li>
+  {/each}
+</ul>
